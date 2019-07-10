@@ -1,19 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Websocket from 'react-websocket';
 
-class WorkSpaceCards extends Component {
+class WorkSpaceCard extends Component {
+
+    state = {
+        content: ""
+    }
+
+    componentDidMount() {
+        this.setState({content: this.props.document.content})
+    }
+    
+    handleChange = (ev) => {
+        this.setState({content: ev.target.value})
+    }
+
+    handleData = (data) => {
+      let result = JSON.parse(data);
+        console.log(result)
+      /* this.setState({count: this.state.count + result.movement});*/
+    }
 
     render() {
+        const {extension, content} = this.props.document
         return (
             <div>
-                <h3>WorkSpace 1</h3>
-                <textarea cols="250" rows="15" placeholder="Write in the Workspace Here..."></textarea>
-                <br></br>
-                <br></br>
-                <h3>WorkSpace 2</h3>
-                <textarea cols="250" rows="15" placeholder="Write in the Workspace Here..."></textarea>  
+                <h3>WorkSpace {extension} </h3>
+                <textarea cols="250" 
+                rows="15" 
+                placeholder={"Write in the Workspace Here..."}
+                onChange={this.handleChange}
+                value={this.state.content}
+                ></textarea>
             </div>
         ) 
     }
 }
 
-export default WorkSpaceCards
+export default WorkSpaceCard
