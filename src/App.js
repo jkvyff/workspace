@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
+  HashRouter,
   Route
 } from 'react-router-dom';
 import NavBar from './components/NavBar'
@@ -21,14 +22,14 @@ class App extends Component {
 
 	render() {
 	  return (
-		<Router>
+		<HashRouter>
 			<div className="App">
 				<NavBar />
 				<h1>WorkSpace Project</h1>
 				<Route exact path="/" render={() => <h1>Home</h1>} />
 				<Route path='/documents' render={routerProps => <DocumentsPage {...routerProps} documents={this.state.documents} />} />
 			</div>
-		</Router>
+		</HashRouter>
 	  );
 	}
 
