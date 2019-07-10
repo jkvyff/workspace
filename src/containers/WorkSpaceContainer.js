@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import WorkSpaces from '../components/WorkSpaces'
+import WorkSpaceCards from '../components/WorkSpaceCards';
 
 class WorkSpaceContainer extends Component {
 
     render() {
         return (
             <div>
-                <WorkSpaces />
+                <WorkSpaceCards />
             </div>
         )
     }
