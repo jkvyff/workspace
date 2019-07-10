@@ -10,7 +10,7 @@ const DocumentsShow = ({match, documents}) => {
       	<Route key={document.extension} 
       	path={`${match.url}/${document.extension}`} 
       	document={document}
-      	component={routerProps => 
+      	render={routerProps => 
       		<WorkSpaceCard document={document} /> } />
 	  ))}
     </div>

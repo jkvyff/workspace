@@ -28,7 +28,6 @@ class NavBar extends Component {
                 <div className="content">
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={Login} />
-                    <Route path="/workspace" component={WorkSpaceContainer} />
                 </div>
             </HashRouter>
         )
