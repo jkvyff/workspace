@@ -1,0 +1,29 @@
+{
+  "user": [
+	{
+		"id": 1,
+		"username": "Wilma",
+		"password": "Wilbert",
+		"avatar": "https://upload.wikimedia.org/wikipedia/commons/e/e8/CandymyloveYasu.png"
+	},
+	{
+		"id": 2,
+		"username": "Honey",
+		"password": "flavor",
+		"avatar": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Circle-icons-profile.svg"
+	}
+  ],
+  "document": [
+	{
+		"id": 1,
+		"extension": "abcde",
+		"content": "Written Stuff"
+	},
+	{
+		"id": 2,
+		"extension": "xyz",
+		"content": "The other stuff"
+	}
+	
+  ]
+}
