@@ -5,7 +5,6 @@ import {
     HashRouter
 } from 'react-router-dom';
 
-import WorkSpaceContainer from '../containers/WorkSpaceContainer'
 import SignUp from './SignUp';
 import Login from './Login';
 

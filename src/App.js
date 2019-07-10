@@ -8,7 +8,6 @@ import {
 import NavBar from './components/NavBar'
 import DocumentsPage from './containers/DocumentsPage'
 
-
 class App extends Component {
 
 
