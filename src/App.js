@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import NavBar from './components/NavBar'
 import DocumentsPage from './containers/DocumentsPage'
-import WorkSpaceContainer from './containers/WorkSpaceContainer'
 
 
 class App extends Component {
@@ -22,14 +21,13 @@ class App extends Component {
 
 	render() {
 	  return (
-	  	<Router>
-		    <div className="App">
-		      <NavBar />
-          <h1>WorkSpace Project</h1>
-          <WorkSpaceContainer />
-		      <Route exact path="/" render={() => <h1>Home</h1>} />
-		      <Route path='/documents' render={routerProps => <DocumentsPage {...routerProps} documents={this.state.documents}/>} />
-		    </div>
+		<Router>
+			<div className="App">
+				<NavBar />
+				<h1>WorkSpace Project</h1>
+				<Route exact path="/" render={() => <h1>Home</h1>} />
+				<Route path='/documents' render={routerProps => <DocumentsPage {...routerProps} documents={this.state.documents} />} />
+			</div>
 		</Router>
 	  );
 	}
