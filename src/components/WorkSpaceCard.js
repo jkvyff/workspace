@@ -9,10 +9,34 @@ class WorkSpaceCard extends Component {
 
     componentDidMount() {
         this.setState({content: this.props.document.content})
+        this.interval = setInterval(() => {
+            fetch(`http://localhost:3000/document/${this.props.document.id}`)
+            .then(res => res.json())
+            .then(json => console.log({content: json.content}))
+        }, 3000)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
     
     handleChange = (ev) => {
-        this.setState({content: ev.target.value})
+        const VAL = ev.target.value
+        this.fetchPost(VAL)
+    }
+
+    fetchPost = content => {
+        const URL = `http://localhost:3000/document/${this.props.document.id}`
+        this.setState({content: content})
+        fetch(URL , {
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+            method: 'PATCH',
+            body: JSON.stringify({
+                content: content
+            })
+        })
+        .then(res => res.json())
+        .then(json => console.log(json))
     }
 
     handleData = (data) => {
