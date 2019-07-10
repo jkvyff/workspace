@@ -5,7 +5,6 @@ import {
     HashRouter
 } from 'react-router-dom';
 
-import WorkSpaceContainer from '../containers/WorkSpaceContainer'
 import SignUp from './SignUp';
 import Login from './Login';
 
@@ -28,7 +27,6 @@ class NavBar extends Component {
                 <div className="content">
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={Login} />
-                    <Route path="/workspace" component={WorkSpaceContainer} />
                 </div>
             </HashRouter>
         )

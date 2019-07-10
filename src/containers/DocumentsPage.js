@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import WorkSpaceCard from '../components/WorkSpaceCards'
+import WorkSpaceCard from '../components/WorkSpaceCard'
 
 
 const DocumentsShow = ({match, documents}) => {
@@ -10,7 +10,7 @@ const DocumentsShow = ({match, documents}) => {
       	<Route key={document.extension} 
       	path={`${match.url}/${document.extension}`} 
       	document={document}
-      	component={routerProps => 
+      	render={routerProps => 
       		<WorkSpaceCard document={document} /> } />
 	  ))}
     </div>
