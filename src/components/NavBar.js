@@ -2,33 +2,35 @@ import React, { Component } from 'react';
 import {
     Route,
     NavLink,
-    HashRouter
+    BrowserRouter
 } from 'react-router-dom';
 
 import SignUp from './SignUp';
 import Login from './Login';
+import DocumentsPage from '../containers/DocumentsPage'
 
 class NavBar extends Component {
 
     render() {
         return (
-            <HashRouter>
+            <BrowserRouter>
                 <div className="ui menu">
                     <div className="item">
-                        <div className="ui primary button" style={{ text: "white" }}><NavLink to="/signup">Sign Up</NavLink></div>
+                        <button className="ui black button"><NavLink to="/signup">Sign Up</NavLink></button>
                     </div>
                     <div className="item">
-                        <div className="ui button"><NavLink to="/login">Log-in</NavLink></div>
+                        <button className="ui button"><NavLink to="/login">Log-in</NavLink></button>
                     </div>
                     <div className="item">
-                        <div className="ui button"><NavLink to="/newdocument">Add Workspace</NavLink></div>
+                        <button className="ui button"><NavLink to="/documents">Add Workspace</NavLink></button>
                     </div>
                 </div>
                 <div className="content">
-                    <Route path="/signup" component={SignUp} />
-                    <Route path="/login" component={Login} />
+                    <Route exact path="/signup" component={SignUp} />
+                    <Route exact path="/login" component={Login} />
+                    <Route path="/documents" render={routerProps => <DocumentsPage {...routerProps} documents={this.props.documents}/>} /> 
                 </div>
-            </HashRouter>
+            </BrowserRouter>
         )
     }
 }

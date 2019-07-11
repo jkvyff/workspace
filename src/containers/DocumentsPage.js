@@ -4,9 +4,10 @@ import WorkSpaceCard from '../components/WorkSpaceCard'
 
 
 const DocumentsShow = ({match, documents}) => {
+  console.log(documents)
   return (
     <div>
-      { documents.map(document => (
+      {documents.map(document => (
       	<Route key={document.extension} 
       	path={`${match.url}/${document.extension}`} 
       	document={document}

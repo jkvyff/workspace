@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
-  HashRouter,
   Route
 } from 'react-router-dom';
-import NavBar from './components/NavBar'
-import DocumentsPage from './containers/DocumentsPage'
+import NavBar from './components/NavBar';
+import DocumentsPage from './containers/DocumentsPage';
+import Home from './components/Home'
 
 class App extends Component {
-
 
 	state = {
 		documents: []
@@ -21,14 +20,13 @@ class App extends Component {
 
 	render() {
 	  return (
-		<HashRouter>
+		<Router>
 			<div className="App">
-				<NavBar />
-				<h1>WorkSpace Project</h1>
-				<Route exact path="/" render={() => <h1>Home</h1>} />
-				<Route path='/documents' render={routerProps => <DocumentsPage {...routerProps} documents={this.state.documents} />} />
-			</div>
-		</HashRouter>
+				<NavBar documents={this.state.documents} />
+				<Route exact path="/" component={Home}/>
+				<Route exact path='/documents' render={routerProps => <DocumentsPage {...routerProps} documents={this.state.documents} />} />
+			</div>  
+		</Router>
 	  );
 	}
 

@@ -43,19 +43,19 @@ class WorkSpaceCard extends Component {
     handleData = (data) => {
       let result = JSON.parse(data);
         console.log(result)
-      /* this.setState({count: this.state.count + result.movement});*/
+        // this.setState({count: this.state.count + result.movement});
     }
 
     render() {
-        const {extension, content} = this.props.document
+        const extension = this.props.document.extension
         return (
             <div>
                 <h3>WorkSpace {extension} </h3>
-                <textarea cols="250" 
-                rows="15" 
-                placeholder={"Write in the Workspace Here..."}
-                onChange={this.handleChange}
-                value={this.state.content}
+                <textarea cols="200" 
+                    rows="15" 
+                    placeholder={"Write in the Workspace Here..."}
+                    onChange={this.handleChange}
+                    value={this.state.content}
                 ></textarea>
             </div>
         ) 
