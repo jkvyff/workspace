@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { API_ROOT } from '../constants';
 
 //import Websocket from 'react-websocket';
 
@@ -11,7 +12,7 @@ class WorkSpaceCard extends Component {
     componentDidMount() {
         this.setState({content: this.props.document.content})
         this.interval = setInterval(() => {
-            fetch(`http://localhost:3000/document/${this.props.document.id}`)
+            fetch(`{API_DOC}/${this.props.document.id}`)
             .then(res => res.json())
             .then(json => console.log({content: json.content}))
         }, 3000)
@@ -27,7 +28,7 @@ class WorkSpaceCard extends Component {
     }
 
     fetchPost = content => {
-        const URL = `http://localhost:3000/document/${this.props.document.id}`
+        const URL = `{API_DOC}/${this.props.document.id}`
         this.setState({content: content})
         fetch(URL , {
             headers: { "Content-Type": "application/json; charset=utf-8" },
