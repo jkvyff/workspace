@@ -44,7 +44,7 @@ class WorkSpaceCard extends Component {
     handleData = (data) => {
       let result = JSON.parse(data);
         console.log(result)
-        // this.setState({count: this.state.count + result.movement});
+        this.setState({count: this.state.count + result.movement});
     }
 
     render() {

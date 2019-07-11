@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "dotenv": "^8.0.0",
+    "draft-js": "^0.11.0",
+    "draft-js-plugins-editor": "^2.1.1",
     "react": "^16.8.6",
     "react-actioncable-provider": "^2.0.0",
     "react-dom": "^16.8.6",
