@@ -28,7 +28,9 @@ class NavBar extends Component {
                 <div className="content">
                     <Route exact path="/signup" component={SignUp} />
                     <Route exact path="/login" component={Login} />
-                    <Route path="/documents" render={routerProps => <DocumentsPage {...routerProps} documents={this.props.documents}/>} /> 
+                    <Route exact path="/documents" render={routerProps => 
+                        <DocumentsPage {...routerProps} documents={this.props.documents}/>
+                    }/> 
                 </div>
             </BrowserRouter>
         )
