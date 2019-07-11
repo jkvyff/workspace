@@ -15,7 +15,7 @@ class NavBar extends Component {
             <HashRouter>
                 <div className="ui menu">
                     <div className="item">
-                        <div className="ui primary button" style={{ text: "white" }}><NavLink to="/signup">Sign Up</NavLink></div>
+                        <div className="ui button"><NavLink to="/signup">Sign Up</NavLink></div>
                     </div>
                     <div className="item">
                         <div className="ui button"><NavLink to="/login">Log-in</NavLink></div>
