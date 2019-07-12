@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
 
     state = {
-        username: ''
+        username: '',
+        password: ''
     }
 
     constructor() {
@@ -29,7 +31,7 @@ class Login extends Component {
             headers: {
                 'Content-Type': 'application/json' 
             },
-            body: JSON.stringify({ user: username, password })
+            body: JSON.stringify({ user: {username, password}})
         })
         .then(resp => resp.json())
         .then(json => {
@@ -39,12 +41,14 @@ class Login extends Component {
                 this.getProfile()
             }
         })
+        .then(() => {
+            this.props.history.push('../components/Home.js')
+        })
     }
 
     logout() {
         this.clearToken()
         this.setState({username: ''})
-        return false
     }
 
     getProfile = () => {
@@ -98,9 +102,14 @@ class Login extends Component {
                                         <label>Password</label>
                                         <input type="password" name="pass" placeholder="Password" ref={this.password}></input>
                                     </div>
-                                    <button className="ui primary labeled icon button" type="submit">
+                                    <button className="ui primary labeled icon button" type="submit" onClick={this.login}>
                                         <i className="unlock alternate icon"></i>
                                         Login
+                                    </button>
+
+                                    <button className="ui primary labeled icon button" onClick={this.logout}>
+                                        <i className="smile icon"></i>
+                                        Logout
                                     </button>
                                 </form>
                             </div>
@@ -112,4 +121,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
