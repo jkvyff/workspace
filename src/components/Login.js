@@ -112,6 +112,10 @@ class Login extends Component {
                                         Logout
                                     </button>
                                 </form>
+                                <div className="ui error message">
+                                    New User?  Sign up
+                                    <a href="./signup">  Here!</a>
+                                </div>
                             </div>
                         </div>
                     </div>

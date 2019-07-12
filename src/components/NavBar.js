@@ -16,9 +16,6 @@ class NavBar extends Component {
             <div>
                 <div className="ui menu">
                     <div className="item">
-                        <button className="ui black button"><NavLink to="/signup">Sign Up</NavLink></button>
-                    </div>
-                    <div className="item">
                         <button className="ui button"><NavLink to="/login">Log-in</NavLink></button>
                     </div>
                     <div className="item">
