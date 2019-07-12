@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { API_WS_ROOT} from '../constants';
 import ActionCable from 'actioncable'
 
-
 class WorkSpaceCard extends Component {
 
     state = {
