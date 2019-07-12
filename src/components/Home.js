@@ -1,15 +1,14 @@
 import React from 'react';
 
-const Home = () => {
+const Home = (props) => {
+    console.log(props)
     return(
         <div>
-            <h1>
-                Home!!
-            </h1>
             <br></br>
-            <h3>
-                Sign Up To Use This Application
-            </h3>
+            <h1>
+                {props.user ? `Welcome to WorkSpace! @${props.user}`
+                : 'Welcome To Workspace, Please Sign Up!'}
+            </h1>
         </div>
     )
 }

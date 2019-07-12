@@ -1,36 +1,37 @@
 import React, { Component } from 'react';
 import {
-    Route,
-    NavLink
+    NavLink,
+    withRouter
 } from 'react-router-dom';
-
-import SignUp from './SignUp';
-import Login from './Login';
-import '../styling/NavBar.css'
+import '../styling/NavBar.css';
 
 class NavBar extends Component {
+
+    logout = event => {
+        this.props.onLogout(event)
+        this.props.history.push('/')
+    }
 
     render() {
         return (
             <div>
                 <div className="ui menu">
                     <div className="item">
-                        <button className="ui button"><NavLink to="/login">Log-in</NavLink></button>
+                        <button className="ui button"><NavLink to="/">Log-in</NavLink></button>
                     </div>
                     <div className="item">
-                        <button className="ui button"><NavLink to="/documents">Go To Workspace</NavLink></button>
+                        <button className="ui button"><NavLink to="/documents">WorkSpaces</NavLink></button>
                     </div>
                     <div className="item">
-                        <button className="ui button">Logout</button>
+                        <button className="ui button"><NavLink to="/home">Home</NavLink></button>
                     </div>
-                </div>
-                <div className="content">
-                    <Route exact path="/signup" component={SignUp} />
-                    <Route exact path="/login" component={Login} />
+                    <div className="item">
+                        <button className="ui button" onClick={this.logout}>Logout</button>
+                    </div>
                 </div>
             </div>
         )
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);
