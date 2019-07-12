@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import Home from './Home'
 
 class Login extends Component {
 
@@ -42,7 +43,12 @@ class Login extends Component {
             }
         })
         .then(() => {
-            this.props.history.push('../components/Home.js')
+            if (this.state.username === '' && this.state.password === '') {
+                alert("Please Enter In Data")
+            } else {
+                return (<Route exact path="/documents" render={routerProps =>
+                    <Home {...routerProps} user={this.state} />} />)
+            }
         })
     }
 
@@ -82,7 +88,7 @@ class Login extends Component {
             <div className="page-login">
                 <div className="ui centered grid container">
                     <div className="nine wide column">
-                        {/* <div className="ui icon warning message">
+                        <div className="ui icon warning message">
                             <i className="lock icon"></i>
                                 <div className="content">
                                     <div className="header">
@@ -90,7 +96,7 @@ class Login extends Component {
                                     </div>
                                 <p>You might have misspelled your username or password!</p>
                             </div>
-                        </div> */}
+                        </div>
                         <div className="ui fluid card">
                             <div className="content">
                                 <form className="ui form" method="POST">
@@ -114,7 +120,11 @@ class Login extends Component {
                                 </form>
                                 <div className="ui error message">
                                     New User?  Sign up
-                                    <a href="./signup">  Here!</a>
+                                    <Home href="/home" render={props =>
+                                        <a href="/home" {...props} user={this.state}>
+                                            Here!
+                                        </a>
+                                    }/>
                                 </div>
                             </div>
                         </div>
@@ -125,4 +135,4 @@ class Login extends Component {
     }
 }
 
-export default withRouter(Login);
+export default Login;

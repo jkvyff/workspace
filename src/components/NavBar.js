@@ -5,8 +5,9 @@ import {
 } from 'react-router-dom';
 
 import SignUp from './SignUp';
-import Login from './Login';
-import '../styling/NavBar.css'
+import Home from './Home';
+import DocumentsPage from '../containers/DocumentsPage';
+import '../styling/NavBar.css';
 
 class NavBar extends Component {
 
@@ -18,7 +19,10 @@ class NavBar extends Component {
                         <button className="ui button"><NavLink to="/login">Log-in</NavLink></button>
                     </div>
                     <div className="item">
-                        <button className="ui button"><NavLink to="/documents">Go To Workspace</NavLink></button>
+                        <button className="ui button"><NavLink to="/documents">WorkSpaces</NavLink></button>
+                    </div>
+                    <div className="item">
+                        <button className="ui button"><NavLink to="/home">Home</NavLink></button>
                     </div>
                     <div className="item">
                         <button className="ui button">Logout</button>
@@ -27,6 +31,10 @@ class NavBar extends Component {
                 <div className="content">
                     <Route exact path="/signup" component={SignUp} />
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/home" component={Home} />
+                    <Route exact path="/documents" render={routerProps => 
+                        <DocumentsPage {...routerProps} documents={this.props.documents}/>
+                    }/> 
                 </div>
             </div>
         )
