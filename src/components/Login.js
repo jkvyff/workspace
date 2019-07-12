@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { API_ROOT} from '../constants';
 
 
 class Login extends Component {
@@ -27,7 +28,7 @@ class Login extends Component {
         let username = this.username.current.value
         let password = this.password.current.value
 
-        fetch('http://localhost:3000/api/v1/login', {
+        fetch(`${API_ROOT}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json' 

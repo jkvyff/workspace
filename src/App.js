@@ -30,9 +30,8 @@ class App extends Component {
 	};
 
 	logout = event => {
-		event.preventDefault()
 		this.clearToken()
-		this.setState({ username: '' })
+		this.setState({ user: '' })
 	}
 
 	clearToken(jwt) {
@@ -42,7 +41,7 @@ class App extends Component {
 	  
 	getProfile = () => {
 		let token = localStorage.getItem('jwt')
-		fetch('http://localhost:3000/api/v1/profile', {
+		fetch(`${API_ROOT}/profile`, {
 			headers: {
 				'Authorization': 'Bearer ' + token
 			}
@@ -63,7 +62,7 @@ class App extends Component {
 		let password = person.password
 
 
-	fetch('http://localhost:3000/api/v1/new', {
+	fetch(`${API_ROOT}/new`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
