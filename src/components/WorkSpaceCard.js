@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { API_ROOT } from '../constants';
+import { API_WS_ROOT} from '../constants';
+import ActionCable from 'actioncable'
 
-//import Websocket from 'react-websocket';
 
 class WorkSpaceCard extends Component {
 
@@ -11,40 +11,22 @@ class WorkSpaceCard extends Component {
 
     componentDidMount() {
         this.setState({content: this.props.document.content})
-        this.interval = setInterval(() => {
-            fetch(`{API_DOC}/${this.props.document.id}`)
-            .then(res => res.json())
-            .then(json => console.log({content: json.content}))
-        }, 3000)
+
+        const cable = ActionCable.createConsumer(API_WS_ROOT)
+        this.sub = cable.subscriptions.create('DocumentsChannel', {
+            received: this.handleReceiveNewText
+        })
     }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
+    handleReceiveNewText = (doc) => {
+        if (doc.content !== this.state.content) {
+            this.setState({ content: doc.content })
+        }
     }
     
     handleChange = (ev) => {
-        const VAL = ev.target.value
-        this.fetchPost(VAL)
-    }
-
-    fetchPost = content => {
-        const URL = `{API_DOC}/${this.props.document.id}`
-        this.setState({content: content})
-        fetch(URL , {
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'PATCH',
-            body: JSON.stringify({
-                content: content
-            })
-        })
-        .then(res => res.json())
-        .then(json => console.log(json))
-    }
-
-    handleData = (data) => {
-      let result = JSON.parse(data);
-        console.log(result)
-        this.setState({count: this.state.count + result.movement});
+        this.setState({ content: ev.target.value })
+        this.sub.send({ content: ev.target.value, id: this.props.document.id })
     }
 
     render() {
