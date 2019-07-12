@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styling/SignUp.css'
+import { withRouter } from 'react-router-dom';
 
 class SignUp extends Component {
 
@@ -12,31 +12,10 @@ class SignUp extends Component {
     }
 
     handleSubmit = (event) => {
+        const person = this.state
+        this.props.onSignUp(event, person)
+        this.props.history.push('/home')
 
-        event.preventDefault()
-
-        let username = this.state.username
-        let password = this.state.password
-
-
-        fetch('http://localhost:3000/api/v1/new', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ user: { username, password } })
-        })
-            .then(resp => resp.json())
-            .then(json => {
-                console.log('login:', json)
-                if (json && json.jwt) {
-                    this.saveToken(json.jwt)
-                }
-            })
-    }
-
-    saveToken(jwt) {
-        localStorage.setItem('jwt', jwt)
     }
 
     handleChange = (event) => {
@@ -50,6 +29,7 @@ class SignUp extends Component {
     render() {
         return (
             <div className="signup">
+                <br></br>
                 <div className="page-login">
                     <div className="ui centered grid container">
                         <div className="nine wide column">
@@ -73,10 +53,6 @@ class SignUp extends Component {
                                             <label>Enter Password</label>
                                             <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange}></input>
                                         </div>
-                                        {/* <div className="field">
-                                            <label>Confirm Password</label>
-                                            <input type="password" name="conformPass" placeholder="Confirm Password"></input>
-                                        </div> */}
                                         <button className="ui primary labeled icon button" type="submit">
                                             <i className="file icon"></i>
                                             Sign Up!
@@ -92,4 +68,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
