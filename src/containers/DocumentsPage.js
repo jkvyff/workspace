@@ -7,21 +7,23 @@ class DocumentsShow extends Component {
   render() {
     const {match, documents} = this.props
     return (
-      <div className="documentsList">
-        {documents.map(document => (
-          <div key={document.extension} >
-            <Route exact path={match.url} 
-            render={routerProps => 
-              <div className="item">
-                <button className="ui button"><NavLink to={`/documents/${document.extension}`}>Workspace {document.extension}</NavLink></button>
-              </div>
-            } />
+      <div className="ui inverted segment">
+        <div className="ui inverted relaxed divided list">
+          {documents.map(document => (
+            <div className="item" key={document.extension} >
+              <Route exact path={match.url} 
+              render={routerProps => 
+                <div className="content"> 
+                    <NavLink to={`/documents/${document.extension}`}>Workspace {document.extension}</NavLink>
+                </div>
+              } />
           	<Route path={`${match.url}/${document.extension}`} 
           	render={routerProps => 
           		<WorkSpaceCard document={document} /> 
             } />
           </div>
-  	    ))}
+        ))}
+        </div>
       </div>
     );
   }

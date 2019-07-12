@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import Home from './Home'
+import { withRouter } from 'react-router-dom';
+
 
 class Login extends Component {
 
@@ -15,7 +15,7 @@ class Login extends Component {
         this.password = React.createRef()
 
         if (this.getToken()) {
-            this.getProfile()
+            // TODO: if already logged in, redirect away from login page
         }
         this.logout = this.logout.bind(this)
     }
@@ -39,36 +39,20 @@ class Login extends Component {
             console.log('login:', json)
             if (json && json.jwt) {
                 this.saveToken(json.jwt)
-                this.getProfile()
+                this.props.onLogin()
             }
         })
         .then(() => {
-            if (this.state.username === '' && this.state.password === '') {
+            if (username === '' && password === '') {
                 alert("Please Enter In Data")
             } else {
-                return (<Route exact path="/documents" render={routerProps =>
-                    <Home {...routerProps} user={this.state} />} />)
-            }
+                this.props.history.push('/home')
+            } 
         })
     }
 
-    logout() {
-        this.clearToken()
-        this.setState({username: ''})
-    }
-
-    getProfile = () => {
-        let token = this.getToken()
-        fetch('http://localhost:3000/api/v1/profile', {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-        .then(resp => resp.json())
-        .then(json => {
-            console.log('profile:', json)
-            this.setState({ user: json.user })
-        })
+    logout (event) {
+        this.props.onLogout(event)
     }
 
     saveToken(jwt) {
@@ -86,15 +70,15 @@ class Login extends Component {
     render() {
         return (
             <div className="page-login">
+                <br></br>
                 <div className="ui centered grid container">
                     <div className="nine wide column">
-                        <div className="ui icon warning message">
-                            <i className="lock icon"></i>
+                        <div className="ui warning message"> 
                                 <div className="content">
                                     <div className="header">
-                                        Login failed!
+                                        Welcome to WorkSpace!
                                     </div>
-                                <p>You might have misspelled your username or password!</p>
+                                <p>Please Login to collaborate and use a workspace!</p>
                             </div>
                         </div>
                         <div className="ui fluid card">
@@ -108,23 +92,13 @@ class Login extends Component {
                                         <label>Password</label>
                                         <input type="password" name="pass" placeholder="Password" ref={this.password}></input>
                                     </div>
-                                    <button className="ui primary labeled icon button" type="submit" onClick={this.login}>
-                                        <i className="unlock alternate icon"></i>
+                                    <button className="ui fluid large submit button" type="submit" onClick={this.login}>
                                         Login
-                                    </button>
-
-                                    <button className="ui primary labeled icon button" onClick={this.logout}>
-                                        <i className="smile icon"></i>
-                                        Logout
                                     </button>
                                 </form>
                                 <div className="ui error message">
                                     New User?  Sign up
-                                    <Home href="/home" render={props =>
-                                        <a href="/home" {...props} user={this.state}>
-                                            Here!
-                                        </a>
-                                    }/>
+                                    <a href="./signup">  Here!</a>
                                 </div>
                             </div>
                         </div>
@@ -135,4 +109,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
