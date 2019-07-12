@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { API_WS_ROOT} from '../constants';
-import ActionCable from 'actioncable'
+import ActionCable from 'actioncable';
+import _ from 'lodash';
 
 class WorkSpaceCard extends Component {
+    lastTimer = null
+    lastPress = 0
 
     state = {
         content: ""
@@ -18,14 +21,29 @@ class WorkSpaceCard extends Component {
     }
 
     handleReceiveNewText = (doc) => {
-        if (doc.content !== this.state.content && doc.id === this.props.document.id) {
+        console.log(doc.timestamp, 'received', doc.content)
+        if (doc.content !== this.state.content && doc.id === this.props.document.id && doc.timestamp >= this.lastPress) {
             this.setState({ content: doc.content })
         }
     }
     
+    
     handleChange = (ev) => {
         this.setState({ content: ev.target.value })
-        this.sub.send({ content: ev.target.value, id: this.props.document.id })
+        // figure out the milliseconds since last keypress
+        let now = (new Date()).getTime()
+        let delta = now - this.lastPress
+        this.lastPress = now
+
+        // if the last time we pressed a key was recent then cancel the update to the server
+        if (delta < 500) {
+            clearTimeout(this.lastTimer)
+        }
+        // always assume we will send a update to the server 500ms from now
+        let content = ev.target.value
+        this.lastTimer = setTimeout(() => {
+            this.sub.send({ content, id: this.props.document.id, timestamp: now })           
+        })
     }
 
     render() {
