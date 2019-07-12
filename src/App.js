@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import { API_ROOT, HEADERS } from './constants';
-import { BrowserRouter as Router, HashRouter, Route } from 'react-router-dom';
+import { API_ROOT } from './constants';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import NavBar from './components/NavBar'
 import DocumentsPage from './containers/DocumentsPage'
@@ -9,8 +9,7 @@ import DocumentsPage from './containers/DocumentsPage'
 class App extends Component {
 	
 	state = {
-		documents: [],
-		activeDocument: null
+		documents: []
 	}
 
 	componentDidMount() {
@@ -29,7 +28,7 @@ class App extends Component {
 
 
 	render() {
-	  const { documents, activeDocument } = this.state;
+	  const { documents } = this.state;
 	  return (
 		<Router>
 			<div className="App">

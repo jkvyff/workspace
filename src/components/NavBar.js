@@ -6,7 +6,6 @@ import {
 
 import SignUp from './SignUp';
 import Login from './Login';
-import DocumentsPage from '../containers/DocumentsPage'
 import '../styling/NavBar.css'
 
 class NavBar extends Component {
