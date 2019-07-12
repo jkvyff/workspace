@@ -8,12 +8,14 @@ class DocumentsShow extends Component {
     const {match, documents} = this.props
     return (
       <div className="documentsList">
-        {documents.map(document => (
-        	<Route key={document.extension} 
-        	path={`${match.url}/${document.extension}`} 
-        	render={routerProps => 
-        		<WorkSpaceCard document={document} /> } />
-  	    ))}
+        <ul>
+          {documents.map(document => (
+        	  <Route key={document.extension} 
+        	  path={`${match.url}/${document.extension}`} 
+        	  render={routerProps => 
+        		  <WorkSpaceCard document={document} /> } />
+          ))}
+        </ul>
       </div>
     );
   }

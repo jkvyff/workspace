@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import { API_ROOT, HEADERS } from './constants';
-import { BrowserRouter as Router, HashRouter, Route } from 'react-router-dom';
+import { API_ROOT } from './constants';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import NavBar from './components/NavBar'
 import DocumentsPage from './containers/DocumentsPage'
+import Login from './components/Login'
 
 class App extends Component {
 	
@@ -34,8 +35,7 @@ class App extends Component {
 		<Router>
 			<div className="App">
 				<NavBar documents={documents} />
-				<h1>WorkSpace Project</h1>
-				<Route exact path="/" render={() => <h1>Home</h1>} />
+				<Route exact path="/" component={Login} />
 				<Route path='/documents' render={routerProps => 
 					<DocumentsPage {...routerProps} documents={documents} />
 				}/>

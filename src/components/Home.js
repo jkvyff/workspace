@@ -1,15 +1,12 @@
 import React from 'react';
 
-const Home = () => {
+const Home = (props, user) => {
+    console.log(user)
     return(
         <div>
             <h1>
-                Home!!
+                Welcome
             </h1>
-            <br></br>
-            <h3>
-                Sign Up To Use This Application
-            </h3>
         </div>
     )
 }
