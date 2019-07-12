@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import WorkSpaceCard from '../components/WorkSpaceCard'
 
 
@@ -9,10 +9,18 @@ class DocumentsShow extends Component {
     return (
       <div className="documentsList">
         {documents.map(document => (
-        	<Route key={document.extension} 
-        	path={`${match.url}/${document.extension}`} 
-        	render={routerProps => 
-        		<WorkSpaceCard document={document} /> } />
+          <div key={document.extension} >
+            <Route exact path={match.url} 
+            render={routerProps => 
+              <div className="item">
+                <button className="ui button"><NavLink to={`/documents/${document.extension}`}>Workspace {document.extension}</NavLink></button>
+              </div>
+            } />
+          	<Route path={`${match.url}/${document.extension}`} 
+          	render={routerProps => 
+          		<WorkSpaceCard document={document} /> 
+            } />
+          </div>
   	    ))}
       </div>
     );
