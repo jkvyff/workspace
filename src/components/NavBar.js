@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom';
 
 import SignUp from './SignUp';
-import Login from './Login';
 import Home from './Home';
 import DocumentsPage from '../containers/DocumentsPage';
 import '../styling/NavBar.css';

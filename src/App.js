@@ -10,8 +10,7 @@ import Login from './components/Login'
 class App extends Component {
 	
 	state = {
-		documents: [],
-		activeDocument: null
+		documents: []
 	}
 
 	componentDidMount() {
@@ -30,7 +29,7 @@ class App extends Component {
 
 
 	render() {
-	  const { documents, activeDocument } = this.state;
+	  const { documents } = this.state;
 	  return (
 		<Router>
 			<div className="App">

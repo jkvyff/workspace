@@ -18,7 +18,7 @@ class WorkSpaceCard extends Component {
     }
 
     handleReceiveNewText = (doc) => {
-        if (doc.content !== this.state.content) {
+        if (doc.content !== this.state.content && doc.id === this.props.document.id) {
             this.setState({ content: doc.content })
         }
     }
