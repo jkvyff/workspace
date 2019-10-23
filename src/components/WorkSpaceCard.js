@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { API_WS_ROOT} from '../constants';
 import ActionCable from 'actioncable';
-import _ from 'lodash';
 
 class WorkSpaceCard extends Component {
     lastTimer = null
@@ -27,7 +26,6 @@ class WorkSpaceCard extends Component {
         }
     }
     
-    
     handleChange = (ev) => {
         this.setState({ content: ev.target.value })
         // figure out the milliseconds since last keypress
@@ -51,7 +49,7 @@ class WorkSpaceCard extends Component {
         return (
             <div>
                 <h3>WorkSpace {extension} </h3>
-                <textarea cols="200" 
+                <textarea className="work-space"
                     rows="15" 
                     placeholder={"Write in the Workspace Here..."}
                     onChange={this.handleChange}
