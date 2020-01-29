@@ -8,7 +8,6 @@ class DocumentsShow extends Component {
     const {match, documents} = this.props
     return (
       <div className="ui inverted segment">
-        <div className="ui inverted relaxed divided list">
           {documents.map(document => (
             <div className="item" key={document.extension} >
               <Route exact path={match.url} 
@@ -23,7 +22,6 @@ class DocumentsShow extends Component {
             } />
           </div>
         ))}
-        </div>
       </div>
     );
   }

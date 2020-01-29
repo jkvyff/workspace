@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { API_WS_ROOT} from '../constants';
+import { API_WS_ROOT } from '../constants';
+import TextEditor from '../components/TextEditor'
 import ActionCable from 'actioncable';
 
 class WorkSpaceCard extends Component {
@@ -49,6 +50,7 @@ class WorkSpaceCard extends Component {
         return (
             <div>
                 <h3>WorkSpace {extension} </h3>
+                {/* <TextEditor text={this.state.content} /> */}
                 <textarea className="work-space"
                     rows="15" 
                     placeholder={"Write in the Workspace Here..."}
