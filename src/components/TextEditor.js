@@ -53,7 +53,7 @@ const TextEditor = (text, document) => {
         // always assume we will send a update to the server 500ms from now
         let content = JSON.stringify(value)
         lastTimer = setTimeout(() => {
-            sub.send({ content, id: document.id, timestamp: now })           
+            sub.send({ content: content, id: document.id, timestamp: now })           
         })
     }
 
@@ -78,11 +78,11 @@ const TextEditor = (text, document) => {
         autoFocus
         onKeyDown={event => {
             for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event)) {
-                event.preventDefault()
-                const mark = HOTKEYS[hotkey]
-                toggleMark(editor, mark)
-            }
+                if (isHotkey(hotkey, event)) {
+                    event.preventDefault()
+                    const mark = HOTKEYS[hotkey]
+                    toggleMark(editor, mark)
+                }
             }
         }}
         />
