@@ -17,7 +17,7 @@ const HOTKEYS = {
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
-const TextEditor = (text, document) => {
+const TextEditor = (document) => {
     const [value, setValue] = useState(initialValue)
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
@@ -25,19 +25,20 @@ const TextEditor = (text, document) => {
 
     const cable = ActionCable.createConsumer(API_WS_ROOT)
 
+    let lastTimer = null
+    let lastPress = 0
+
     const handleReceiveNewText = (doc) => {
-        console.log(doc.timestamp, 'received', doc.content)
-        if (doc.content !== JSON.stringify(value) && doc.id === document.id && doc.timestamp >= lastPress) {
-            setValue(JSON.parse(doc.content))
+        const {id, content, created_at } = doc.document
+        console.log(created_at, 'received', content)
+        if (content !== JSON.stringify(value) && id === document.id && created_at >= lastPress) {
+            setValue(JSON.parse(content))
         }
     }
 
-    let sub = cable.subscriptions.create('DocumentsChannel', {
-        received: handleReceiveNewText
+    const sub = cable.subscriptions.create('DocumentsChannel', {
+        received: handleReceiveNewText(document)
     })
-
-    let lastTimer = null
-    let lastPress = 0
 
     const handleChange = (value) => {
         setValue(value)
@@ -51,10 +52,10 @@ const TextEditor = (text, document) => {
             clearTimeout(lastTimer)
         }
         // always assume we will send a update to the server 500ms from now
-        let content = JSON.stringify(value)
         lastTimer = setTimeout(() => {
-            sub.send({ content: content, id: document.id, timestamp: now })           
+            sub.send({ content: JSON.stringify(value), id: document.document.id, timestamp: now })           
         })
+        console.log(value)
     }
 
     return (
