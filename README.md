@@ -4,5 +4,5 @@ Create an app that enable collaborating on the same page
 # Install and get running
 Get running with npm
 
-npm install
-npm start
+1. `npm install`
+2. `npm start`
