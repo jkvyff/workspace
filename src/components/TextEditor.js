@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import { API_WS_ROOT } from '../constants';
 import ActionCable from 'actioncable';
 import isHotkey from 'is-hotkey'
@@ -19,43 +19,43 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
 const TextEditor = (document) => {
     const [value, setValue] = useState(initialValue)
+    const [cable] = useState(ActionCable.createConsumer(API_WS_ROOT))
+    const [lastTimer, setLastTimer] = useState(null)
+    const [lastPress, setLastPress] = useState(1000000000000)
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
     const editor = useMemo(() => withHistory(withReact(createEditor())), [])
 
-    const cable = ActionCable.createConsumer(API_WS_ROOT)
-
-    let lastTimer = null
-    let lastPress = 0
 
     const handleReceiveNewText = (doc) => {
-        const {id, content, created_at } = doc.document
-        console.log(created_at, 'received', content)
-        if (content !== JSON.stringify(value) && id === document.id && created_at >= lastPress) {
-            setValue(JSON.parse(content))
+        const { id, content, timestamp } = doc
+        // console.log(timestamp, 'received', content)
+        if (JSON.stringify(content) !== JSON.stringify(value) && id === document.document.id && timestamp >= lastPress) {
+            setValue(content)
         }
     }
 
-    const sub = cable.subscriptions.create('DocumentsChannel', {
-        received: handleReceiveNewText(document)
-    })
+    const [sub] = useState(cable.subscriptions.create('DocumentsChannel', {
+        received: handleReceiveNewText
+    }))
 
     const handleChange = (value) => {
         setValue(value)
         // figure out the milliseconds since last keypress
-        let now = (new Date()).getTime()
+        let now = new Date().getTime()
         let delta = now - lastPress
-        lastPress = now
+        console.log(delta)
+        
+        setLastPress(now)
 
         // if the last time we pressed a key was recent then cancel the update to the server
         if (delta < 500) {
             clearTimeout(lastTimer)
         }
         // always assume we will send a update to the server 500ms from now
-        lastTimer = setTimeout(() => {
-            sub.send({ content: JSON.stringify(value), id: document.document.id, timestamp: now })           
-        })
-        console.log(value)
+        setLastTimer(setTimeout(() => {
+            sub.send({ content: value, id: document.document.id, timestamp: now })           
+        }))
     }
 
     return (
