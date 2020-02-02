@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useEffect } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { API_WS_ROOT } from '../constants';
 import ActionCable from 'actioncable';
 import isHotkey from 'is-hotkey'
@@ -25,7 +25,6 @@ const TextEditor = (document) => {
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
     const editor = useMemo(() => withHistory(withReact(createEditor())), [])
-
 
     const handleReceiveNewText = (doc) => {
         const { id, content, timestamp } = doc
