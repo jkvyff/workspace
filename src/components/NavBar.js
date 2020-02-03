@@ -3,7 +3,6 @@ import {
     NavLink,
     withRouter
 } from 'react-router-dom';
-import '../styling/NavBar.css';
 
 class NavBar extends Component {
 

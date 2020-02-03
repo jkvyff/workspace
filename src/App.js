@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
 import { API_ROOT } from './constants';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import NavBar from './components/NavBar'
 import DocumentsPage from './containers/DocumentsPage'
 import SignUp from './components/SignUp'
