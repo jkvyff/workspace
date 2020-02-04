@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import { API_WS_ROOT } from '../constants';
 import ActionCable from 'actioncable';
 import isHotkey from 'is-hotkey'
@@ -18,6 +18,7 @@ const HOTKEYS = {
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
 const TextEditor = (document) => {
+    const obj = document.document.content
     const [value, setValue] = useState(initialValue)
     const [cable] = useState(ActionCable.createConsumer(API_WS_ROOT))
     const [lastTimer, setLastTimer] = useState(null)
@@ -28,15 +29,15 @@ const TextEditor = (document) => {
 
     const handleReceiveNewText = (doc) => {
         const { id, content, timestamp } = doc
-        // console.log(timestamp, 'received', content)
-        if (JSON.stringify(content) !== JSON.stringify(value) && id === document.document.id && timestamp >= lastPress) {
-            setValue(content)
+        console.log(timestamp, 'received', content)
+        if (timestamp >= lastPress + 500 && content !== value && id === document.document.id) {
+            setValue(JSON.parse(content))
         }
     }
 
-    const [sub] = useState(cable.subscriptions.create('DocumentsChannel', {
+    const sub = cable.subscriptions.create('DocumentsChannel', {
         received: handleReceiveNewText
-    }))
+    })
 
     const handleChange = (value) => {
         setValue(value)
@@ -53,7 +54,7 @@ const TextEditor = (document) => {
         }
         // always assume we will send a update to the server 500ms from now
         setLastTimer(setTimeout(() => {
-            sub.send({ content: value, id: document.document.id, timestamp: now })           
+            sub.send({ content: JSON.stringify(value), id: document.document.id, timestamp: now })           
         }))
     }
 
