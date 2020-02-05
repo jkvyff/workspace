@@ -26,6 +26,7 @@ export const Button = React.forwardRef(
         {...props}
         ref={ref}
         className={cx(
+            'icon-button',
             className,
             css`
             cursor: pointer;
@@ -47,7 +48,6 @@ export const Icon = React.forwardRef(({ className, ...props }, ref) => (
       {...props}
       ref={ref}
       className={cx(
-        'material-icons',
         className,
         css`
           font-size: 18px;

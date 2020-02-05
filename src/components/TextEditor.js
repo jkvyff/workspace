@@ -18,7 +18,6 @@ const HOTKEYS = {
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
 const TextEditor = (document) => {
-    const obj = document.document.content
     const [value, setValue] = useState(initialValue)
     const [cable] = useState(ActionCable.createConsumer(API_WS_ROOT))
     const [lastTimer, setLastTimer] = useState(null)
@@ -26,12 +25,16 @@ const TextEditor = (document) => {
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
     const editor = useMemo(() => withHistory(withReact(createEditor())), [])
+    let last = 0
 
     const handleReceiveNewText = (doc) => {
         const { id, content, timestamp } = doc
         console.log(timestamp, 'received', content)
-        if (timestamp >= lastPress + 500 && content !== value && id === document.document.id) {
+        if (last !== lastPress && timestamp >= lastPress && content !== value && id === document.document.id) {
+            last = +lastPress
             setValue(JSON.parse(content))
+        } else {
+            sub.unsubscribe() 
         }
     }
 
@@ -54,7 +57,8 @@ const TextEditor = (document) => {
         }
         // always assume we will send a update to the server 500ms from now
         setLastTimer(setTimeout(() => {
-            sub.send({ content: JSON.stringify(value), id: document.document.id, timestamp: now })           
+            sub.send({ content: JSON.stringify(value), id: document.document.id, timestamp: now })
+            sub.unsubscribe()       
         }))
     }
 
